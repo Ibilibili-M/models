@@ -8,7 +8,10 @@ PATH_TO_DATASET="/home/lifei/models/research/deeplab/datasets/data_v2/tfrecord"
 python train.py \
     --logtostderr \
     --num_clones=4 \
+    --train_batch_size=8 \
+    --fine_tune_batch_norm=False \
     --training_number_of_steps=800000 \
+    --base_learning_rate 0.0004 \
     --train_split="train" \
     --model_variant="xception_65" \
     --atrous_rates=6 \
@@ -17,9 +20,6 @@ python train.py \
     --output_stride=16 \
     --decoder_output_stride=4 \
     --train_crop_size="513,513" \
-    --train_batch_size=8 \
-    --base_learning_rate 0.0004 \
-    --fine_tune_batch_norm=False \
     --dataset="wheel" \
     --tf_initial_checkpoint=${PATH_TO_INITIAL_CHECKPOINT} \
     --train_logdir=${PATH_TO_TRAIN_DIR} \
