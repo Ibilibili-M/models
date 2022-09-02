@@ -26,15 +26,9 @@
 # Exit immediately if a command exits with a non-zero status.
 set -e
 
-# Move one-level up to tensorflow/models/research directory.
-cd ..
-
-# Update PYTHONPATH.
-export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
-
 # Set up the working environment.
 CURRENT_DIR=$(pwd)
-WORK_DIR="${CURRENT_DIR}/deeplab"
+WORK_DIR="${CURRENT_DIR}"
 
 # Run model_test first to make sure the PYTHONPATH is correctly set.
 python "${WORK_DIR}"/model_test.py
@@ -48,34 +42,32 @@ bash download_and_convert_voc2012.sh
 cd "${CURRENT_DIR}"
 
 # Set up the working directories.
-PASCAL_FOLDER="pascal_voc_seg"
-EXP_FOLDER="exp/train_on_trainval_set"
-INIT_FOLDER="${WORK_DIR}/${DATASET_DIR}/${PASCAL_FOLDER}/init_models"
-TRAIN_LOGDIR="${WORK_DIR}/${DATASET_DIR}/${PASCAL_FOLDER}/${EXP_FOLDER}/train"
-EVAL_LOGDIR="${WORK_DIR}/${DATASET_DIR}/${PASCAL_FOLDER}/${EXP_FOLDER}/eval"
-VIS_LOGDIR="${WORK_DIR}/${DATASET_DIR}/${PASCAL_FOLDER}/${EXP_FOLDER}/vis"
-EXPORT_DIR="${WORK_DIR}/${DATASET_DIR}/${PASCAL_FOLDER}/${EXP_FOLDER}/export"
-mkdir -p "${INIT_FOLDER}"
+DATA_VERSION="data_v3"
+EXP_NAME="exp/train_on_trainval_set"
+TRAIN_LOGDIR="${WORK_DIR}/${DATASET_DIR}/${DATA_VERSION}/${EXP_NAME}/train"
+EVAL_LOGDIR="${WORK_DIR}/${DATASET_DIR}/${DATA_VERSION}/${EXP_NAME}/eval"
+VIS_LOGDIR="${WORK_DIR}/${DATASET_DIR}/${DATA_VERSION}/${EXP_NAME}/vis"
+EXPORT_DIR="${WORK_DIR}/${DATASET_DIR}/${DATA_VERSION}/${EXP_NAME}/export"
 mkdir -p "${TRAIN_LOGDIR}"
 mkdir -p "${EVAL_LOGDIR}"
 mkdir -p "${VIS_LOGDIR}"
 mkdir -p "${EXPORT_DIR}"
 
-# Copy locally the trained checkpoint as the initial checkpoint.
-TF_INIT_ROOT="http://download.tensorflow.org/models"
-TF_INIT_CKPT="deeplabv3_pascal_train_aug_2018_01_04.tar.gz"
-cd "${INIT_FOLDER}"
-wget -nd -c "${TF_INIT_ROOT}/${TF_INIT_CKPT}"
-tar -xf "${TF_INIT_CKPT}"
-cd "${CURRENT_DIR}"
+# PATH_TO_INITIAL_CHECKPOINT="/home/lifei/models/research/deeplab/datasets/deeplabv3_pascal_train_aug/model.ckpt"
+PATH_TO_INITIAL_CHECKPOINT="/home/lifei/models/research/deeplab/datasets/data_v1/exp-0610/train/model.ckpt-800000"
 
-PASCAL_DATASET="${WORK_DIR}/${DATASET_DIR}/${PASCAL_FOLDER}/tfrecord"
+PATH_TO_DATASET="${WORK_DIR}/${DATASET_DIR}/${DATA_VERSION}/tfrecord"
 
 # Train 10 iterations.
 NUM_ITERATIONS=10
 python "${WORK_DIR}"/train.py \
   --logtostderr \
-  --train_split="trainval" \
+  --num_clones=4 \
+  --train_batch_size=16 \
+  --fine_tune_batch_norm=true \
+  --training_number_of_steps="${NUM_ITERATIONS}" \
+  --base_learning_rate 0.0004 \
+  --train_split="train" \
   --model_variant="xception_65" \
   --atrous_rates=6 \
   --atrous_rates=12 \
@@ -83,12 +75,10 @@ python "${WORK_DIR}"/train.py \
   --output_stride=16 \
   --decoder_output_stride=4 \
   --train_crop_size="513,513" \
-  --train_batch_size=4 \
-  --training_number_of_steps="${NUM_ITERATIONS}" \
-  --fine_tune_batch_norm=true \
-  --tf_initial_checkpoint="${INIT_FOLDER}/deeplabv3_pascal_train_aug/model.ckpt" \
+  --dataset="wheel" \
+  --tf_initial_checkpoint=${PATH_TO_INITIAL_CHECKPOINT} \
   --train_logdir="${TRAIN_LOGDIR}" \
-  --dataset_dir="${PASCAL_DATASET}"
+  --dataset_dir="${PATH_TO_DATASET}"
 
 # Run evaluation. This performs eval over the full val split (1449 images) and
 # will take a while.
@@ -103,9 +93,10 @@ python "${WORK_DIR}"/eval.py \
   --output_stride=16 \
   --decoder_output_stride=4 \
   --eval_crop_size="513,513" \
+  --dataset="wheel" \
   --checkpoint_dir="${TRAIN_LOGDIR}" \
   --eval_logdir="${EVAL_LOGDIR}" \
-  --dataset_dir="${PASCAL_DATASET}" \
+  --dataset_dir="${PATH_TO_DATASET}" \
   --max_number_of_evaluations=1
 
 # Visualize the results.
@@ -121,7 +112,7 @@ python "${WORK_DIR}"/vis.py \
   --vis_crop_size="513,513" \
   --checkpoint_dir="${TRAIN_LOGDIR}" \
   --vis_logdir="${VIS_LOGDIR}" \
-  --dataset_dir="${PASCAL_DATASET}" \
+  --dataset_dir="${PATH_TO_DATASET}" \
   --max_number_of_iterations=1
 
 # Export the trained checkpoint.
@@ -138,7 +129,7 @@ python "${WORK_DIR}"/export_model.py \
   --atrous_rates=18 \
   --output_stride=16 \
   --decoder_output_stride=4 \
-  --num_classes=21 \
+  --num_classes=13 \
   --crop_size=513 \
   --crop_size=513 \
   --inference_scales=1.0
