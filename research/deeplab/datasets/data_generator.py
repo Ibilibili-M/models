@@ -99,10 +99,29 @@ _ADE20K_INFORMATION = DatasetDescriptor(
     ignore_label=0,
 )
 
+# _WHEEL_INFORMATION = DatasetDescriptor(
+#     splits_to_sizes={
+#         'train': 36264,  # num of samples in images/training
+#         'val': 1909,  # num of samples in images/validation
+#     },
+#     num_classes=13,
+#     ignore_label=255,
+# )
+
+_WHEEL_INFORMATION = DatasetDescriptor(
+    splits_to_sizes={
+        'train': 26619,  # num of samples in images/training
+        'val': 269,  # num of samples in images/validation
+    },
+    num_classes=13,
+    ignore_label=255,
+)
+
 _DATASETS_INFORMATION = {
     'cityscapes': _CITYSCAPES_INFORMATION,
     'pascal_voc_seg': _PASCAL_VOC_SEG_INFORMATION,
     'ade20k': _ADE20K_INFORMATION,
+    'wheel': _WHEEL_INFORMATION,
 }
 
 # Default file pattern of TFRecord of TensorFlow Example.
