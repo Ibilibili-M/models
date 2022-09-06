@@ -154,3 +154,7 @@ research/deeplab/trash/test.sh
 research/deeplab/trash/test2.sh
 research/deeplab/datasets/data_v3/
 research/deeplab/datasets/jbz_v1/Thumbs.db
+research/deeplab/trash
+research/deeplab/wandb
+
+
