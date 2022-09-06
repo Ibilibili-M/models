@@ -35,11 +35,6 @@ python "${WORK_DIR}"/model_test.py
 
 # Go to datasets folder and download PASCAL VOC 2012 segmentation dataset.
 DATASET_DIR="datasets"
-cd "${WORK_DIR}/${DATASET_DIR}"
-bash download_and_convert_voc2012.sh
-
-# Go back to original directory.
-cd "${CURRENT_DIR}"
 
 # Set up the working directories.
 DATA_VERSION="data_v3"
@@ -63,8 +58,8 @@ NUM_ITERATIONS=10
 python "${WORK_DIR}"/train.py \
   --logtostderr \
   --num_clones=4 \
-  --train_batch_size=16 \
-  --fine_tune_batch_norm=true \
+  --train_batch_size=8 \
+  --fine_tune_batch_norm=false \
   --training_number_of_steps="${NUM_ITERATIONS}" \
   --base_learning_rate 0.0004 \
   --train_split="train" \

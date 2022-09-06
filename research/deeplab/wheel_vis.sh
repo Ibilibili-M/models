@@ -1,0 +1,15 @@
+python vis.py \
+    --logtostderr \
+    --vis_split="val" \
+    --model_variant="xception_65" \
+    --atrous_rates=6 \
+    --atrous_rates=12 \
+    --atrous_rates=18 \
+    --output_stride=16 \
+    --decoder_output_stride=4 \
+    --vis_crop_size="1025,2049" \
+    --dataset="wheel" \
+    --colormap_type="cityscapes" \
+    --checkpoint_dir=${PATH_TO_TRAIN_DIR} \
+    --vis_logdir=${PATH_TO_VIS_DIR} \
+    --dataset_dir=${PATH_TO_DATASET}
