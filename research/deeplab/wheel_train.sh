@@ -2,15 +2,15 @@
 
 export CUDA_VISIBLE_DEVICES=0,1,2,3
 
-TRAIN_STEPS=50000
+TRAIN_STEPS=500000
 
 # 训练模型
 python train.py \
     --logtostderr \
     --num_clones=4 \
-    --train_batch_size=16 \
-    --fine_tune_batch_norm=true \
-    --training_number_of_steps=500000 \
+    --train_batch_size=8 \
+    --fine_tune_batch_norm=false \
+    --training_number_of_steps=${TRAIN_STEPS} \
     --base_learning_rate 0.0004 \
     --train_split="train" \
     --model_variant="xception_65" \
@@ -26,20 +26,20 @@ python train.py \
     --dataset_dir=${PATH_TO_DATASET}
 
 # # 导出模型
-# python export_model.py \
-#     --logtostderr \
-#     --checkpoint_path="${PATH_TO_TRAIN_DIR}/model.ckpt-500000" \
-#     --export_path="/home/lifei/models/research/deeplab/datasets/data_v3/exp-0830/export/datav3_0902.pb" \
-#     --model_variant="xception_65" \
-#     --atrous_rates=6 \
-#     --atrous_rates=12 \
-#     --atrous_rates=18 \
-#     --output_stride=16 \
-#     --decoder_output_stride=4 \
-#     --num_classes=13 \
-#     --crop_size=513 \
-#     --crop_size=513 \
-#     --inference_scales=1.0
+python export_model.py \
+    --logtostderr \
+    --checkpoint_path="${PATH_TO_TRAIN_DIR}/model.ckpt-${TRAIN_STEPS}" \
+    --export_path="${EXPORT_DIR}/datav3_${EXP_NAME}.pb" \
+    --model_variant="xception_65" \
+    --atrous_rates=6 \
+    --atrous_rates=12 \
+    --atrous_rates=18 \
+    --output_stride=16 \
+    --decoder_output_stride=4 \
+    --num_classes=13 \
+    --crop_size=513 \
+    --crop_size=513 \
+    --inference_scales=1.0
 # checkpoint_path：训练保存的检查点文件
 # export_path：模型导出路径
 # num_classes：分类类别
