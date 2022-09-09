@@ -1,6 +1,8 @@
 . ./wheel_path_config.sh
 
-export CUDA_VISIBLE_DEVICES=0,1,2,3
+set -e
+
+export CUDA_VISIBLE_DEVICES=0,1
 
 TRAIN_STEPS=500000
 
