@@ -2,14 +2,14 @@
 
 set -e
 
-export CUDA_VISIBLE_DEVICES=0,1
+export CUDA_VISIBLE_DEVICES=0,1,2,3
 
-TRAIN_STEPS=300000
+TRAIN_STEPS=500000
 
 # 训练模型
 python train.py \
     --logtostderr \
-    --num_clones=2 \
+    --num_clones=4 \
     --train_batch_size=8 \
     --fine_tune_batch_norm=false \
     --training_number_of_steps=${TRAIN_STEPS} \
