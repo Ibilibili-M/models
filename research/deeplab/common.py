@@ -143,7 +143,7 @@ flags.DEFINE_boolean('decoder_output_is_logits', False,
 flags.DEFINE_boolean('image_se_uses_qsigmoid', False, 'Use q-sigmoid.')
 
 flags.DEFINE_multi_float(
-    'label_weights', [1.0, 1.0, 1.0, 1.0, 2.0, 2.0, 2.0, 1.0, 1.0, 1.5, 3.0, 1.0, 1.0],
+    'label_weights', [1.0, 1.0, 1.5, 1.0, 2.5, 2.0, 2.5, 1.0, 1.0, 1.5, 3.0, 1.0, 1.0],
     'A list of label weights, each element represents the weight for the label '
     'of its index, for example, label_weights = [0.1, 0.5] means the weight '
     'for label 0 is 0.1 and the weight for label 1 is 0.5. If set as None, all '
