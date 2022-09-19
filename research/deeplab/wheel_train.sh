@@ -2,14 +2,14 @@
 
 set -e
 
-export CUDA_VISIBLE_DEVICES=0,1,2,3
+export CUDA_VISIBLE_DEVICES=0
 
 TRAIN_STEPS=500000
 
 # 训练模型
 python train.py \
     --logtostderr \
-    --num_clones=4 \
+    --num_clones=1 \
     --train_batch_size=8 \
     --fine_tune_batch_norm=false \
     --training_number_of_steps=${TRAIN_STEPS} \
@@ -31,7 +31,7 @@ python train.py \
 python export_model.py \
     --logtostderr \
     --checkpoint_path="${PATH_TO_TRAIN_DIR}/model.ckpt-${TRAIN_STEPS}" \
-    --export_path="${EXPORT_DIR}/datav3_${EXP_NAME}.pb" \
+    --export_path="${EXPORT_DIR}/${DATA_VERSION}_${EXP_NAME}.pb" \
     --model_variant="xception_65" \
     --atrous_rates=6 \
     --atrous_rates=12 \
