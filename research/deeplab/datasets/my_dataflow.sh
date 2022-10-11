@@ -1,9 +1,11 @@
 set -e
 
-version="_v5"
+version="_v11"
 data_labelme="./data_annotated"${version}
 data_voc="./data_dataset_voc"${version}
 echo "data_labelme:"${data_labelme}"data_voc:"${data_voc}
+
+ln -s "/mnt/disk/lifei/data_dataset_voc${version}" "./data_dataset_voc${version}"
 # python labelme2voc_o.py ${data_labelme} ${data_voc} --labels labels.txt
 
 # python remove_gt_colormap.py \
@@ -27,9 +29,8 @@ mkdir $(pwd)"/"${DATASET_NAME}"/valannot"
 find ${data_voc}/JPEGImages/ -name "*.*" |xargs -i cp {} $(pwd)/${DATASET_NAME}/image
 find ${data_voc}/SegmentationClassPNG-raw/ -name "*.*" |xargs -i cp {} $(pwd)/${DATASET_NAME}/mask
 
-# python get_train_val.py
-
-# python get_names.py
+python get_train_val.py --data_root $(pwd)"/"${DATASET_NAME}
+python get_names.py --data_root $(pwd)"/"${DATASET_NAME}
 
 python ./build_voc2012_data.py \
 --image_folder=$(pwd)"/"${DATASET_NAME}"/image" \
