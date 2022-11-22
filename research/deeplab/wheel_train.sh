@@ -2,9 +2,9 @@
 
 set -e
 
-export CUDA_VISIBLE_DEVICES=0
+export CUDA_VISIBLE_DEVICES=2
 
-TRAIN_STEPS=500000
+TRAIN_STEPS=250000
 
 # 训练模型
 python train.py \
@@ -13,7 +13,7 @@ python train.py \
     --train_batch_size=8 \
     --fine_tune_batch_norm=false \
     --training_number_of_steps=${TRAIN_STEPS} \
-    --base_learning_rate 0.0004 \
+    --base_learning_rate=0.0004 \
     --train_split="train" \
     --model_variant="xception_65" \
     --atrous_rates=6 \
