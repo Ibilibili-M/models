@@ -4,7 +4,7 @@ set -e
 
 export CUDA_VISIBLE_DEVICES=2
 
-TRAIN_STEPS=250000
+TRAIN_STEPS=500000
 
 # 训练模型
 python train.py \
@@ -22,6 +22,8 @@ python train.py \
     --output_stride=16 \
     --decoder_output_stride=4 \
     --train_crop_size="513,513" \
+    --min_scale_factor=0.75 \
+    --max_scale_factor=1.25 \
     --dataset="wheel" \
     --tf_initial_checkpoint=${PATH_TO_INITIAL_CHECKPOINT} \
     --train_logdir=${PATH_TO_TRAIN_DIR} \
