@@ -117,11 +117,21 @@ _WHEEL_INFORMATION = DatasetDescriptor(
     ignore_label=255,
 )
 
+_HOLE_INFORMATION = DatasetDescriptor(
+    splits_to_sizes={
+        'train': 524,  # num of samples in images/training
+        'val': 1,  # num of samples in images/validation
+    },
+    num_classes=2,
+    ignore_label=255,
+)
+
 _DATASETS_INFORMATION = {
     'cityscapes': _CITYSCAPES_INFORMATION,
     'pascal_voc_seg': _PASCAL_VOC_SEG_INFORMATION,
     'ade20k': _ADE20K_INFORMATION,
     'wheel': _WHEEL_INFORMATION,
+    'hole': _HOLE_INFORMATION,
 }
 
 # Default file pattern of TFRecord of TensorFlow Example.
