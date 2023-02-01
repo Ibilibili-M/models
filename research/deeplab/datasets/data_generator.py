@@ -110,8 +110,8 @@ _ADE20K_INFORMATION = DatasetDescriptor(
 
 _WHEEL_INFORMATION = DatasetDescriptor(
     splits_to_sizes={
-        'train': 46665,  # num of samples in images/training
-        'val': 4216,  # num of samples in images/validation
+        'train': 47186,  # num of samples in images/training
+        'val': 48,  # num of samples in images/validation
     },
     num_classes=13,
     ignore_label=255,
