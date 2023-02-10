@@ -1,6 +1,6 @@
 ROOT="/home/lifei/models/research/deeplab/datasets/"
-DATA_VERSION="data_v19"
-EXP_NAME="${DATA_VERSION}_exp-20230201-lr00004"
+DATA_VERSION="data_v20"
+EXP_NAME="${DATA_VERSION}_exp-20230210-lr00004"
 
 # PATH_TO_INITIAL_CHECKPOINT="/home/lifei/models/research/deeplab/datasets/deeplabv3_pascal_train_aug/model.ckpt"
 # PATH_TO_INITIAL_CHECKPOINT="/home/lifei/models/research/deeplab/datasets/data_v11-v2/exp-1013/train/model.ckpt-800000"
