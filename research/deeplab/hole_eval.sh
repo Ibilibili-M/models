@@ -1,4 +1,4 @@
-. ./wheel_path_config.sh
+. ./hole_path_config.sh
 export CUDA_VISIBLE_DEVICES=7
 
 python eval.py \
@@ -11,7 +11,7 @@ python eval.py \
     --output_stride=16 \
     --decoder_output_stride=4 \
     --eval_crop_size="513,513" \
-    --dataset="wheel" \
+    --dataset="hole" \
     --checkpoint_dir=${PATH_TO_TRAIN_DIR} \
     --eval_logdir=${PATH_TO_EVAL_DIR} \
     --dataset_dir=${PATH_TO_DATASET}

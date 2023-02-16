@@ -1,8 +1,11 @@
-. ./wheel_path_config.sh
+. ./wheel_path_config_xception_71.sh
 
 set -e
 
-export CUDA_VISIBLE_DEVICES=0
+# PATH_TO_INITIAL_CHECKPOINT="/home/lifei/models/research/deeplab/datasets/deeplab_cityscapes_xception71_trainfine_2018_09_08/train_fine/model.ckpt"
+PATH_TO_INITIAL_CHECKPOINT="/home/lifei/models/research/deeplab/datasets/data_v20/data_v20_exp-0211-xception71-lr00004/train/model.ckpt-300000"
+
+export CUDA_VISIBLE_DEVICES=2
 
 TRAIN_STEPS=300000
 
@@ -15,7 +18,7 @@ python train.py \
     --training_number_of_steps=${TRAIN_STEPS} \
     --base_learning_rate=0.0004 \
     --train_split="train" \
-    --model_variant="xception_65" \
+    --model_variant="xception_71" \
     --atrous_rates=6 \
     --atrous_rates=12 \
     --atrous_rates=18 \
@@ -27,14 +30,12 @@ python train.py \
     --train_logdir=${PATH_TO_TRAIN_DIR} \
     --dataset_dir=${PATH_TO_DATASET}
 
-#     --min_scale_factor=0.75 \
-#   --max_scale_factor=1.25 \
 # # 导出模型
 python export_model.py \
     --logtostderr \
     --checkpoint_path="${PATH_TO_TRAIN_DIR}/model.ckpt-${TRAIN_STEPS}" \
     --export_path="${EXPORT_DIR}/${DATA_VERSION}_${EXP_NAME}.pb" \
-    --model_variant="xception_65" \
+    --model_variant="xception_71" \
     --atrous_rates=6 \
     --atrous_rates=12 \
     --atrous_rates=18 \

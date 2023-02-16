@@ -1,8 +1,8 @@
-. ./wheel_path_config.sh
+. ./hole_path_config_xception41.sh
 
 set -e
 
-export CUDA_VISIBLE_DEVICES=0
+export CUDA_VISIBLE_DEVICES=3
 
 TRAIN_STEPS=300000
 
@@ -10,39 +10,67 @@ TRAIN_STEPS=300000
 python train.py \
     --logtostderr \
     --num_clones=1 \
-    --train_batch_size=8 \
+    --train_batch_size=6 \
     --fine_tune_batch_norm=false \
     --training_number_of_steps=${TRAIN_STEPS} \
     --base_learning_rate=0.0004 \
     --train_split="train" \
-    --model_variant="xception_65" \
+    --model_variant="xception_41" \
     --atrous_rates=6 \
     --atrous_rates=12 \
     --atrous_rates=18 \
     --output_stride=16 \
     --decoder_output_stride=4 \
-    --train_crop_size="513,513" \
-    --dataset="wheel" \
+    --train_crop_size="1024,1024" \
+    --min_scale_factor=0.75 \
+    --max_scale_factor=1.25 \
+    --dataset="hole" \
     --tf_initial_checkpoint=${PATH_TO_INITIAL_CHECKPOINT} \
     --train_logdir=${PATH_TO_TRAIN_DIR} \
     --dataset_dir=${PATH_TO_DATASET}
 
-#     --min_scale_factor=0.75 \
-#   --max_scale_factor=1.25 \
+# python train.py \
+#     --logtostderr \
+#     --num_clones=1 \
+#     --train_batch_size=8 \
+#     --fine_tune_batch_norm=false \
+#     --training_number_of_steps=${TRAIN_STEPS} \
+#     --base_learning_rate=0.0004 \
+#     --train_split="train" \
+#     --model_variant=mobilenet_v3_large_seg \
+#     --image_pooling_crop_size=513,513 \
+#     --image_pooling_stride=4,5 \
+#     --add_image_level_feature=1 \
+#     --aspp_convs_filters=128 \
+#     --aspp_with_concat_projection=0 \
+#     --aspp_with_squeeze_and_excitation=1 \
+#     --decoder_use_sum_merge=1 \
+#     --decoder_filters=19 \
+#     --decoder_output_is_logits=1 \
+#     --image_se_uses_qsigmoid=1 \
+#     --decoder_output_stride=8 \
+#     --output_stride=32 \
+#     --dataset="hole" \
+#     --tf_initial_checkpoint=${PATH_TO_INITIAL_CHECKPOINT} \
+#     --train_logdir=${PATH_TO_TRAIN_DIR} \
+#     --dataset_dir=${PATH_TO_DATASET}
+
+
+
 # # 导出模型
 python export_model.py \
     --logtostderr \
     --checkpoint_path="${PATH_TO_TRAIN_DIR}/model.ckpt-${TRAIN_STEPS}" \
     --export_path="${EXPORT_DIR}/${DATA_VERSION}_${EXP_NAME}.pb" \
-    --model_variant="xception_65" \
+    --model_variant="xception_41" \
     --atrous_rates=6 \
     --atrous_rates=12 \
     --atrous_rates=18 \
     --output_stride=16 \
     --decoder_output_stride=4 \
-    --num_classes=13 \
-    --crop_size=513 \
-    --crop_size=513 \
+    --num_classes=2 \
+    --crop_size=1024 \
+    --crop_size=1024 \
     --inference_scales=1.0
 # checkpoint_path：训练保存的检查点文件
 # export_path：模型导出路径

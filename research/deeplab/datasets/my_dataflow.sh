@@ -1,11 +1,12 @@
 set -e
-
-version="_v11"
+export CUDA_VISIBLE_DEVICES=0
+version="_hole-test"
 data_labelme="./data_annotated"${version}
 data_voc="./data_dataset_voc"${version}
 echo "data_labelme:"${data_labelme}"data_voc:"${data_voc}
 
-ln -s "/mnt/disk/lifei/data_dataset_voc${version}" "./data_dataset_voc${version}"
+# ln -s "/mnt/disk/lifei/data_dataset_voc${version}" "./data_dataset_voc${version}"
+ln -s "/mnt/disk/lifei/datasets/wheel/hole_test" "./data_dataset_voc${version}"
 # python labelme2voc_o.py ${data_labelme} ${data_voc} --labels labels.txt
 
 # python remove_gt_colormap.py \

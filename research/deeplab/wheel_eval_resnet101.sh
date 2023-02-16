@@ -1,10 +1,10 @@
-. ./wheel_path_config.sh
-export CUDA_VISIBLE_DEVICES=7
+. ./wheel_path_config_resnet101.sh
+export CUDA_VISIBLE_DEVICES=3
 
 python eval.py \
     --logtostderr \
     --eval_split="val" \
-    --model_variant="xception_65" \
+    --model_variant="resnet_v1_101_beta" \
     --atrous_rates=6 \
     --atrous_rates=12 \
     --atrous_rates=18 \

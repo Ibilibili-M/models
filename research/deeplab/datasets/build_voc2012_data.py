@@ -101,7 +101,7 @@ def _convert_dataset(dataset_split):
   num_images = len(filenames)
   num_per_shard = int(math.ceil(num_images / _NUM_SHARDS))
 
-  image_reader = build_data.ImageReader('jpeg', channels=3)
+  image_reader = build_data.ImageReader('png', channels=3)
   label_reader = build_data.ImageReader('png', channels=1)
 
   for shard_id in range(_NUM_SHARDS):
@@ -116,8 +116,10 @@ def _convert_dataset(dataset_split):
             i + 1, len(filenames), shard_id))
         sys.stdout.flush()
         # Read the image.
+        # image_filename = os.path.join(
+        #     FLAGS.image_folder, filenames[i] + '.' + FLAGS.image_format)
         image_filename = os.path.join(
-            FLAGS.image_folder, filenames[i] + '.' + FLAGS.image_format)
+            FLAGS.image_folder, filenames[i] + '.' + 'png')
         image_data = tf.gfile.GFile(image_filename, 'rb').read()
         height, width = image_reader.read_image_dims(image_data)
         # Read the semantic segmentation annotation.

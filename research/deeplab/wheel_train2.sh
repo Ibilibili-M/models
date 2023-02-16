@@ -1,16 +1,16 @@
-. ./wheel_path_config.sh
+. ./wheel_path_config2.sh
 
 set -e
 
 export CUDA_VISIBLE_DEVICES=0
 
-TRAIN_STEPS=300000
+TRAIN_STEPS=500000
 
 # 训练模型
 python train.py \
     --logtostderr \
     --num_clones=1 \
-    --train_batch_size=8 \
+    --train_batch_size=16 \
     --fine_tune_batch_norm=false \
     --training_number_of_steps=${TRAIN_STEPS} \
     --base_learning_rate=0.0004 \
@@ -22,13 +22,13 @@ python train.py \
     --output_stride=16 \
     --decoder_output_stride=4 \
     --train_crop_size="513,513" \
+    --min_scale_factor=0.75 \
+    --max_scale_factor=1.25 \
     --dataset="wheel" \
     --tf_initial_checkpoint=${PATH_TO_INITIAL_CHECKPOINT} \
     --train_logdir=${PATH_TO_TRAIN_DIR} \
     --dataset_dir=${PATH_TO_DATASET}
 
-#     --min_scale_factor=0.75 \
-#   --max_scale_factor=1.25 \
 # # 导出模型
 python export_model.py \
     --logtostderr \

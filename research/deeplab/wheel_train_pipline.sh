@@ -54,7 +54,7 @@ PATH_TO_INITIAL_CHECKPOINT="/home/lifei/models/research/deeplab/datasets/data_v1
 PATH_TO_DATASET="${WORK_DIR}/${DATASET_DIR}/${DATA_VERSION}/tfrecord"
 
 # Train 10 iterations.
-NUM_ITERATIONS=10
+NUM_ITERATIONS=500000
 python "${WORK_DIR}"/train.py \
   --logtostderr \
   --num_clones=4 \

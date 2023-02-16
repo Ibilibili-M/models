@@ -34,12 +34,13 @@ def main():
     src_new_path = url + 'val/'
     mask_new_path = url + 'valannot/'
     i=0
-    while(i <= (int(n*0.05))):
+    while(i <= (int(n*0.00001))):
         src_str = pathlist[array[i]]
         DatasetPath = src_url  + src_str
         print('path: ',DatasetPath)
         moveImg(DatasetPath,src_new_path)
-        mask_str = src_str.replace("jpg","png")
+        # mask_str = src_str.replace("jpg","png")
+        mask_str = src_str
         DatasetPath = mask_url  + mask_str
         print('path: ',DatasetPath)
         moveImg(DatasetPath,mask_new_path)
@@ -52,7 +53,8 @@ def main():
         DatasetPath = src_url + src_str
         print('path: ',DatasetPath)
         moveImg(DatasetPath,src_new_path)
-        mask_str = src_str.replace("jpg","png")
+        # mask_str = src_str.replace("jpg","png")
+        mask_str = src_str
         DatasetPath = mask_url  + mask_str
         print('path: ',DatasetPath)
         moveImg(DatasetPath,mask_new_path)

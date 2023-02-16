@@ -108,9 +108,27 @@ _ADE20K_INFORMATION = DatasetDescriptor(
 #     ignore_label=255,
 # )
 
+# _WHEEL_INFORMATION = DatasetDescriptor(
+#     splits_to_sizes={
+#         'train': 44895,  # num of samples in images/training
+#         'val': 4216,  # num of samples in images/validation
+#     },
+#     num_classes=13,
+#     ignore_label=255,
+# )
+
+# _WHEEL_INFORMATION = DatasetDescriptor(
+#     splits_to_sizes={
+#         'train': 27984,  # num of samples in images/training
+#         'val': 4216,  # num of samples in images/validation
+#     },
+#     num_classes=13,
+#     ignore_label=255,
+# )   # 0.5 train + negative samples
+
 _WHEEL_INFORMATION = DatasetDescriptor(
     splits_to_sizes={
-        'train': 44895,  # num of samples in images/training
+        'train': 53270,  # num of samples in images/training
         'val': 4216,  # num of samples in images/validation
     },
     num_classes=13,
@@ -119,7 +137,7 @@ _WHEEL_INFORMATION = DatasetDescriptor(
 
 _HOLE_INFORMATION = DatasetDescriptor(
     splits_to_sizes={
-        'train': 524,  # num of samples in images/training
+        'train': 2400,  # num of samples in images/training
         'val': 1,  # num of samples in images/validation
     },
     num_classes=2,
